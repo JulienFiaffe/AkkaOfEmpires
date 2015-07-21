@@ -23,5 +23,14 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisor
             actor.Tell(message);
             actor.UnderlyingActor.FoodAmount.ShouldBe<uint>(10);
         }
+
+        [TestMethod]
+        public void When_WoodGathered_Received_Then_WoodAmount_Is_Increased()
+        {
+            var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
+            var message = new WoodGathered { Amount = 12 };
+            actor.Tell(message);
+            actor.UnderlyingActor.WoodAmount.ShouldBe<uint>(12);
+        }
     }
 }

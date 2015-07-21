@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Messages\Gathering\FoodGathered.cs" />
+    <Compile Include="Messages\Gathering\WoodGathered.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
