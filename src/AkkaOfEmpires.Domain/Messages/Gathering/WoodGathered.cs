@@ -8,6 +8,6 @@ namespace AkkaOfEmpires.Domain.Messages.Gathering
 {
     public class WoodGathered
     {
-        public UInt32 Amount { get; set; }
+        public UInt32 Quantity { get; set; }
     }
 }

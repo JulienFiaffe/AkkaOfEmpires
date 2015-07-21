@@ -31,12 +31,12 @@ namespace AkkaOfEmpires.Supervisor
 
         private void OnWoodGathered(WoodGathered message)
         {
-            WoodAmount += message.Amount;
+            WoodAmount += message.Quantity;
         }
 
         private void OnFoodGathered(FoodGathered message)
         {
-            FoodAmount += message.Amount;
+            FoodAmount += message.Quantity;
         }
     }
 }

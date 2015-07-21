@@ -19,7 +19,7 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisor
         public void When_FoodGathered_Received_Then_FoodAmount_Is_Increased()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
-            var message = new FoodGathered { Amount = 10 };
+            var message = new FoodGathered { Quantity = 10 };
             actor.Tell(message);
             actor.UnderlyingActor.FoodAmount.ShouldBe<uint>(10);
         }
@@ -28,7 +28,7 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisor
         public void When_WoodGathered_Received_Then_WoodAmount_Is_Increased()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
-            var message = new WoodGathered { Amount = 12 };
+            var message = new WoodGathered { Quantity = 12 };
             actor.Tell(message);
             actor.UnderlyingActor.WoodAmount.ShouldBe<uint>(12);
         }
