@@ -41,5 +41,14 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisor
             actor.Tell(message);
             actor.UnderlyingActor.GoldAmount.ShouldBe<uint>(8);
         }
+
+        [TestMethod]
+        public void When_StoneGathered_Received_Then_StoneAmount_Is_Increased()
+        {
+            var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
+            var message = new StoneGathered { Quantity = 5 };
+            actor.Tell(message);
+            actor.UnderlyingActor.StoneAmount.ShouldBe<uint>(5);
+        }
     }
 }
