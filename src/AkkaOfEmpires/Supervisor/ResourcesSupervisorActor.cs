@@ -21,6 +21,12 @@ namespace AkkaOfEmpires.Supervisor
         {
             Receive<FoodGathered>(m => OnFoodGathered(m));
             Receive<WoodGathered>(m => OnWoodGathered(m));
+            Receive<GoldGathered>(m => OnGoldGathered(m));
+        }
+
+        private void OnGoldGathered(GoldGathered message)
+        {
+            GoldAmount += message.Quantity;
         }
 
         private void OnWoodGathered(WoodGathered message)
