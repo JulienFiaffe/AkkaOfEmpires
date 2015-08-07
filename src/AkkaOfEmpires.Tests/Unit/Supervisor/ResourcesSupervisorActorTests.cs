@@ -1,4 +1,4 @@
-﻿using Akka.TestKit.VsTest;
+﻿using Akka.TestKit.Xunit;
 using AkkaOfEmpires.Domain.Messages.Gathering;
 using AkkaOfEmpires.Supervisor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
