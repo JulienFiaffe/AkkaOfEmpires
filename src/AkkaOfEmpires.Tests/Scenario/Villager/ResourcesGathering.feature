@@ -2,5 +2,20 @@
 
 Scenario: A villager gathers food
 	Given I have a villager
-	When it gathers food
-	Then the supervisor food amount is increased
+	When he gathers food
+	Then food amount is increased
+
+Scenario: A villager gathers wood
+	Given I have a villager
+	When he gathers wood
+	Then wood amount is increased
+
+Scenario: A villager gathers gold
+	Given I have a villager
+	When he gathers gold
+	Then gold amount is increased
+
+Scenario: A villager gathers stone
+	Given I have a villager
+	When he gathers stone
+	Then stone amount is increased

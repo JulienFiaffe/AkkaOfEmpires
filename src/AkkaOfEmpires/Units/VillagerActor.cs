@@ -1,6 +1,6 @@
 ﻿using Akka.Actor;
-using AkkaOfEmpires.Domain.Commands.Gathering;
-using AkkaOfEmpires.Domain.Messages.Gathering;
+using AkkaOfEmpires.Domain.Commands;
+using AkkaOfEmpires.Domain.Messages;
 
 namespace AkkaOfEmpires.Units
 {
@@ -21,12 +21,30 @@ namespace AkkaOfEmpires.Units
 
         private void Gatherer()
         {
-            Receive<GatherFood>(m => OnGatherFood(m));
+            Receive<GatherFood>(m => OnGatherFood());
+            Receive<GatherWood>(m => OnGatherWood());
+            Receive<GatherGold>(m => OnGatherGold());
+            Receive<GatherStone>(m => OnGatherStone());
         }
 
-        private void OnGatherFood(GatherFood command)
+        private void OnGatherFood()
         {
             _resourcesSupervisor.Tell(new FoodGathered{ Quantity = 10 });
+        }
+
+        private void OnGatherWood()
+        {
+            _resourcesSupervisor.Tell(new WoodGathered{ Quantity = 10 });
+        }
+
+        private void OnGatherGold()
+        {
+            _resourcesSupervisor.Tell(new GoldGathered { Quantity = 10 });
+        }
+
+        private void OnGatherStone()
+        {
+            _resourcesSupervisor.Tell(new StoneGathered { Quantity = 10 });
         }
     }
 }

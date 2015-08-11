@@ -1,6 +1,6 @@
 ﻿using System;
 using Akka.Actor;
-using AkkaOfEmpires.Domain.Messages.Gathering;
+using AkkaOfEmpires.Domain.Messages;
 
 namespace AkkaOfEmpires.Supervisors
 {

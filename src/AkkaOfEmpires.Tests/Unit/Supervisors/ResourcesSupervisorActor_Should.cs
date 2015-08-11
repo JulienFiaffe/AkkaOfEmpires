@@ -1,5 +1,5 @@
 ﻿using Akka.TestKit.Xunit;
-using AkkaOfEmpires.Domain.Messages.Gathering;
+using AkkaOfEmpires.Domain.Messages;
 using AkkaOfEmpires.Supervisors;
 using Shouldly;
 using Xunit;
