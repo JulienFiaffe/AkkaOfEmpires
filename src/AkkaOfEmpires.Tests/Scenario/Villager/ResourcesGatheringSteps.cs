@@ -1,26 +1,48 @@
-﻿using TechTalk.SpecFlow;
+﻿using Akka.Actor;
+using Akka.TestKit;
+using Akka.TestKit.Xunit;
+using AkkaOfEmpires.Domain.Commands.Gathering;
+using AkkaOfEmpires.Supervisors;
+using AkkaOfEmpires.Units;
+using Shouldly;
+using TechTalk.SpecFlow;
 
 namespace AkkaOfEmpires.Tests.Scenario.Villager
 {
     [Binding]
-    public class ResourcesGatheringSteps
+    public class ResourcesGatheringSteps : TestKit
     {
+        [AfterScenario]
+        public void AfterScenario()
+        {
+            Shutdown();
+        }
+
+        private IActorRef _villagerActor;
+        private readonly TestActorRef<ResourcesSupervisorActor> _resourcesSupervisor;
+
+        public ResourcesGatheringSteps()
+        {
+            _resourcesSupervisor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
+        }
+
         [Given(@"I have a villager")]
         public void GivenIHaveAVillager()
         {
-            ScenarioContext.Current.Pending();
+            var props = Props.Create<VillagerActor>(_resourcesSupervisor);
+            _villagerActor = ActorOf(props);
         }
 
         [When(@"it gathers food")]
         public void WhenItGathersFood()
         {
-            ScenarioContext.Current.Pending();
+            _villagerActor.Tell(new GatherFood());
         }
 
-        [Then(@"the food amount is increased")]
+        [Then(@"the supervisor food amount is increased")]
         public void ThenTheFoodAmountIsIncreased()
         {
-            ScenarioContext.Current.Pending();
+            _resourcesSupervisor.UnderlyingActor.FoodAmount.ShouldBeGreaterThan<uint>(0);
         }
 
     }

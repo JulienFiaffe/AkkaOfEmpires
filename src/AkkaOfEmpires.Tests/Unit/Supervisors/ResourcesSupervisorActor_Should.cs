@@ -1,22 +1,21 @@
 ﻿using Akka.TestKit.Xunit;
 using AkkaOfEmpires.Domain.Messages.Gathering;
-using AkkaOfEmpires.Supervisor;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AkkaOfEmpires.Supervisors;
 using Shouldly;
+using Xunit;
 
-namespace AkkaOfEmpires.Tests.Unit.Supervisor
+namespace AkkaOfEmpires.Tests.Unit.Supervisors
 {
-    [TestClass]
-    public class ResourcesSupervisorActorTests : TestKit
+    public class ResourcesSupervisorActor_Should : TestKit
     {
-        [TestCleanup]
-        public void Cleanup()
+        protected override void Dispose(bool disposing)
         {
             Shutdown();
+            base.Dispose(disposing);
         }
 
-        [TestMethod]
-        public void When_FoodGathered_Received_Then_FoodAmount_Is_Increased()
+        [Fact]
+        public void Increase_FoodAmount_When_FoodGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
             var message = new FoodGathered { Quantity = 10 };
@@ -24,8 +23,8 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisor
             actor.UnderlyingActor.FoodAmount.ShouldBe<uint>(10);
         }
 
-        [TestMethod]
-        public void When_WoodGathered_Received_Then_WoodAmount_Is_Increased()
+        [Fact]
+        public void Increase_WoodAmound_When_WoodGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
             var message = new WoodGathered { Quantity = 12 };
@@ -33,8 +32,8 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisor
             actor.UnderlyingActor.WoodAmount.ShouldBe<uint>(12);
         }
 
-        [TestMethod]
-        public void When_GoldGathered_Received_Then_GoldAmount_Is_Increased()
+        [Fact]
+        public void Increase_GoldAmound_When_GoldGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
             var message = new GoldGathered { Quantity = 8 };
@@ -42,8 +41,8 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisor
             actor.UnderlyingActor.GoldAmount.ShouldBe<uint>(8);
         }
 
-        [TestMethod]
-        public void When_StoneGathered_Received_Then_StoneAmount_Is_Increased()
+        [Fact]
+        public void Increase_StoneAmound_When_StoneGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
             var message = new StoneGathered { Quantity = 5 };

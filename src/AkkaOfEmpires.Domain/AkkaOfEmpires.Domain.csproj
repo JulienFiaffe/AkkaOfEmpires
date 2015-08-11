@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Gathering\GatherFood.cs" />
     <Compile Include="Messages\Gathering\FoodGathered.cs" />
     <Compile Include="Messages\Gathering\GoldGathered.cs" />
     <Compile Include="Messages\Gathering\StoneGathered.cs" />

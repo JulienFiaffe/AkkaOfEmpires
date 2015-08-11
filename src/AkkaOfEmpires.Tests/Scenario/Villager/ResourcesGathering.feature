@@ -1,6 +1,6 @@
-﻿Feature: ResourcesGathering
+﻿Feature: Resources Gathering
 
-Scenario: Villager gathers food
+Scenario: A villager gathers food
 	Given I have a villager
 	When it gathers food
-	Then the food amount is increased
+	Then the supervisor food amount is increased

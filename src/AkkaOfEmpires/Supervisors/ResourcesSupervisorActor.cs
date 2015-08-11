@@ -2,7 +2,7 @@
 using Akka.Actor;
 using AkkaOfEmpires.Domain.Messages.Gathering;
 
-namespace AkkaOfEmpires.Supervisor
+namespace AkkaOfEmpires.Supervisors
 {
     public class ResourcesSupervisorActor : ReceiveActor
     {
