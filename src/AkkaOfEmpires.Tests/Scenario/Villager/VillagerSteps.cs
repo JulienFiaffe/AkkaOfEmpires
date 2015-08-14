@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.TestKit;
 using Akka.TestKit.Xunit;
+using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Supervisors;
 using AkkaOfEmpires.Units;
@@ -12,7 +13,7 @@ using TechTalk.SpecFlow;
 namespace AkkaOfEmpires.Tests.Scenario.Villager
 {
     [Binding]
-    public class ResourcesGatheringSteps : TestKit
+    public sealed class VillagerSteps : TestKit
     {
         [AfterScenario]
         public void AfterScenario()
@@ -26,14 +27,14 @@ namespace AkkaOfEmpires.Tests.Scenario.Villager
             _resourcesSupervisor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
         }
 
-        private IActorRef _villagerActor;
+        private TestActorRef<VillagerActor> _villagerActor;
         private TestActorRef<ResourcesSupervisorActor> _resourcesSupervisor;
 
         [Given(@"I have a villager")]
         public void GivenIHaveAVillager()
         {
             var props = Props.Create<VillagerActor>(_resourcesSupervisor);
-            _villagerActor = ActorOf(props);
+            _villagerActor = ActorOfAsTestActorRef<VillagerActor>(props);
         }
 
 
@@ -62,32 +63,39 @@ namespace AkkaOfEmpires.Tests.Scenario.Villager
         }
 
 
-        [Then(@"food amount is increased")]
+        [Then(@"food amount increases over time")]
         public async void ThenTheFoodAmountIsIncreased()
         {
             await Task.Delay(TimeSpan.FromMilliseconds(10));    // waiting for the message to be processed
             _resourcesSupervisor.UnderlyingActor.FoodAmount.ShouldBeGreaterThan<uint>(0);
         }
 
-        [Then(@"wood amount is increased")]
+        [Then(@"wood amount increases over time")]
         public async void ThenTheSupervisorWoodAmountIsIncreased()
         {
             await Task.Delay(TimeSpan.FromMilliseconds(10));
             _resourcesSupervisor.UnderlyingActor.WoodAmount.ShouldBeGreaterThan<uint>(0);
         }
 
-        [Then(@"gold amount is increased")]
+        [Then(@"gold amount increases over time")]
         public async void ThenTheSupervisorGoldAmountIsIncreased()
         {
             await Task.Delay(TimeSpan.FromMilliseconds(10));
             _resourcesSupervisor.UnderlyingActor.GoldAmount.ShouldBeGreaterThan<uint>(0);
         }
 
-        [Then(@"stone amount is increased")]
+        [Then(@"stone amount increases over time")]
         public async void ThenTheSupervisorStoneAmountIsIncreased()
         {
             await Task.Delay(TimeSpan.FromMilliseconds(10));
             _resourcesSupervisor.UnderlyingActor.StoneAmount.ShouldBeGreaterThan<uint>(0);
+        }
+
+
+        [Then(@"he is idle")]
+        public void ThenHeIsIdle()
+        {
+            _villagerActor.UnderlyingActor.Profession.ShouldBe(Profession.Idle);
         }
     }
 }

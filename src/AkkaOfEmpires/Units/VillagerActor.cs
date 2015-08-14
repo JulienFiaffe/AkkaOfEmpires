@@ -1,4 +1,5 @@
 ﻿using Akka.Actor;
+using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Domain.Messages;
 
@@ -11,7 +12,10 @@ namespace AkkaOfEmpires.Units
         public VillagerActor(IActorRef resourcesSupervisor)
         {
             _resourcesSupervisor = resourcesSupervisor;
+            Profession = Profession.Idle;
         }
+
+        public Profession Profession { get; private set; }
 
         protected override void PreStart()
         {

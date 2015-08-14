@@ -74,18 +74,27 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenario\Villager\Professions.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Professions.feature</DependentUpon>
+    </Compile>
     <Compile Include="Scenario\Villager\ResourcesGathering.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourcesGathering.feature</DependentUpon>
     </Compile>
-    <Compile Include="Scenario\Villager\ResourcesGatheringSteps.cs" />
+    <Compile Include="Scenario\Villager\VillagerSteps.cs" />
     <Compile Include="Unit\Supervisors\ResourcesSupervisorActor_Should.cs" />
     <Compile Include="Unit\Units\VillagerActor_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Scenario\Villager\Professions.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Professions.feature.cs</LastGenOutput>
+    </None>
     <None Include="Scenario\Villager\ResourcesGathering.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ResourcesGathering.feature.cs</LastGenOutput>

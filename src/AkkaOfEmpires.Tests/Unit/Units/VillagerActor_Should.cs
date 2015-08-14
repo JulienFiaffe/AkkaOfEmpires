@@ -1,8 +1,10 @@
 ﻿using Akka.Actor;
 using Akka.TestKit.Xunit;
+using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Domain.Messages;
 using AkkaOfEmpires.Units;
+using Shouldly;
 using Xunit;
 
 namespace AkkaOfEmpires.Tests.Unit.Units
@@ -13,6 +15,13 @@ namespace AkkaOfEmpires.Tests.Unit.Units
         {
             Shutdown();
             base.Dispose(disposing);
+        }
+
+        [Fact]
+        public void Be_Idle_By_Default()
+        {
+            var villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
+            villager.UnderlyingActor.Profession.ShouldBe(Profession.Idle);
         }
 
         [Fact]

@@ -3,19 +3,19 @@
 Scenario: A villager gathers food
 	Given I have a villager
 	When he gathers food
-	Then food amount is increased
+	Then food amount increases over time
 
 Scenario: A villager gathers wood
 	Given I have a villager
 	When he gathers wood
-	Then wood amount is increased
+	Then wood amount increases over time
 
 Scenario: A villager gathers gold
 	Given I have a villager
 	When he gathers gold
-	Then gold amount is increased
+	Then gold amount increases over time
 
 Scenario: A villager gathers stone
 	Given I have a villager
 	When he gathers stone
-	Then stone amount is increased
+	Then stone amount increases over time
