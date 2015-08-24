@@ -24,18 +24,19 @@ namespace AkkaOfEmpires.Tests.Units
             villager.UnderlyingActor.Profession.ShouldBe(Profession.Idle);
         }
 
-        [Fact(DisplayName = "VillagerActor Should Send FoodGathered When GatherFruits Received")]
+        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When GatherFruits Received")]
         public void Send_FoodGathered_When_GatherFood_Received()
         {
             var villager = ActorOf(Props.Create<VillagerActor>(TestActor));
             var command = new GatherFruits();
             
             villager.Tell(command);
-            
-            ExpectMsg<FoodGathered>();
+
+            var message = ExpectMsg<ResourceRecolted>();
+            message.ResourceType.ShouldBe(Resource.Food);
         }
 
-        [Fact(DisplayName = "VillagerActor Should Send FoodGathered When ShepherdFlock Received")]
+        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When ShepherdFlock Received")]
         public void Send_FoodGathered_When_ShepherdFlock_Received()
         {
             var villager = ActorOf(Props.Create<VillagerActor>(TestActor));
@@ -43,7 +44,8 @@ namespace AkkaOfEmpires.Tests.Units
 
             villager.Tell(command);
 
-            ExpectMsg<FoodGathered>();
+            var message = ExpectMsg<ResourceRecolted>();
+            message.ResourceType.ShouldBe(Resource.Food);
         }
     }
 }

@@ -23,13 +23,13 @@ namespace AkkaOfEmpires.Units
         public void Handle(GatherFruits message)
         {
             ResourceToRecolt = Resource.Food;
-            _resourcesSupervisor.Tell(new FoodGathered { Quantity = 10 });
+            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
         }
 
         public void Handle(ShepherdFlock message)
         {
             ResourceToRecolt = Resource.Food;
-            _resourcesSupervisor.Tell(new FoodGathered { Quantity = 10 });
+            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
         }
     }
 }

@@ -1,48 +1,28 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Akka.Actor;
+using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Messages;
 
 namespace AkkaOfEmpires.Supervisors
 {
-    public class ResourcesSupervisorActor : ReceiveActor
+    public class ResourcesSupervisorActor : TypedActor, IHandle<ResourceRecolted>
     {
-        public UInt32 FoodAmount { get; private set; }
-        public UInt32 WoodAmount { get; private set; }
-        public UInt32 GoldAmount { get; private set; }
-        public UInt32 StoneAmount { get; private set; }
+        public Dictionary<Resource, uint> ResourcesAmounts { get; private set; }
 
-        protected override void PreStart()
+        public ResourcesSupervisorActor()
         {
-            base.PreStart();
-            Become(SuperviseResources);
+            ResourcesAmounts = new Dictionary<Resource, uint>
+            {
+                {Resource.Food, 0},
+                {Resource.Wood, 0},
+                {Resource.Stone, 0},
+                {Resource.Gold, 0}
+            };
         }
 
-        private void SuperviseResources()
+        public void Handle(ResourceRecolted message)
         {
-            Receive<FoodGathered>(m => OnFoodGathered(m));
-            Receive<WoodGathered>(m => OnWoodGathered(m));
-            Receive<GoldGathered>(m => OnGoldGathered(m));
-            Receive<StoneGathered>(m => OnStoneGathered(m));
-        }
-
-        private void OnStoneGathered(StoneGathered message)
-        {
-            StoneAmount += message.Quantity;
-        }
-
-        private void OnGoldGathered(GoldGathered message)
-        {
-            GoldAmount += message.Quantity;
-        }
-
-        private void OnWoodGathered(WoodGathered message)
-        {
-            WoodAmount += message.Quantity;
-        }
-
-        private void OnFoodGathered(FoodGathered message)
-        {
-            FoodAmount += message.Quantity;
+            ResourcesAmounts[message.ResourceType] += message.Quantity;
         }
     }
 }
