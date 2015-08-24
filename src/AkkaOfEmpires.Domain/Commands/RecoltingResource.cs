@@ -7,4 +7,14 @@
     public class ShepherdFlock
     {
     }
+
+    public class HunterPrey
+    {
+
+    }
+
+    public class FarmCrops
+    {
+
+    }
 }

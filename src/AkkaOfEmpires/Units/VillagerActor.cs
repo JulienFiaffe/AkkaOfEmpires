@@ -26,22 +26,33 @@ namespace AkkaOfEmpires.Units
 
         private void Idle()
         {
-            Receive<GatherFruits>(m => Become(Gatherer));
-            Receive<ShepherdFlock>(m => Become(Shepherd));
+            CommandsHandler();
         }
 
         private void Gatherer()
         {
+            Profession = Profession.Gatherer;
             ResourceToRecolt = Resource.Food;
             // repeat until new order or lack of bushes
             _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
+
+            CommandsHandler();
         }
 
         private void Shepherd()
         {
+            Profession = Profession.Shepherd;
             ResourceToRecolt = Resource.Food;
             // repeat until new order or lack of sheeps
             _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
+
+            CommandsHandler();
+        }
+
+        private void CommandsHandler()
+        {
+            Receive<GatherFruits>(m => Become(Gatherer));
+            Receive<ShepherdFlock>(m => Become(Shepherd));
         }
     }
 }

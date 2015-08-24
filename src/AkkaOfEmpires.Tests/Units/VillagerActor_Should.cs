@@ -47,5 +47,19 @@ namespace AkkaOfEmpires.Tests.Units
             var message = ExpectMsg<ResourceRecolted>();
             message.ResourceType.ShouldBe(Resource.Food);
         }
+
+        [Fact(DisplayName = "VillagerActor Should Be Able To Change Profession")]
+        public void Be_Able_To_Change_Profession()
+        {
+            var villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
+            var shepherdCommand = new ShepherdFlock();
+            villager.Tell(shepherdCommand);
+
+            var gatherCommand = new GatherFruits();
+
+            villager.Tell(gatherCommand);
+
+            villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
+        }
     }
 }
