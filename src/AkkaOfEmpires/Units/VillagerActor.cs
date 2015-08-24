@@ -5,9 +5,7 @@ using AkkaOfEmpires.Domain.Messages;
 
 namespace AkkaOfEmpires.Units
 {
-    public class VillagerActor : TypedActor,
-        IHandle<GatherFruits>,
-        IHandle<ShepherdFlock>
+    public class VillagerActor : ReceiveActor
     {
         private readonly IActorRef _resourcesSupervisor;
 
@@ -20,15 +18,29 @@ namespace AkkaOfEmpires.Units
         public Profession Profession { get; private set; }
         public Resource ResourceToRecolt { get; private set; }
 
-        public void Handle(GatherFruits message)
+        protected override void PreStart()
+        {
+            base.PreStart();
+            Become(Idle);
+        }
+
+        private void Idle()
+        {
+            Receive<GatherFruits>(m => Become(Gatherer));
+            Receive<ShepherdFlock>(m => Become(Shepherd));
+        }
+
+        private void Gatherer()
         {
             ResourceToRecolt = Resource.Food;
+            // repeat until new order or lack of bushes
             _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
         }
 
-        public void Handle(ShepherdFlock message)
+        private void Shepherd()
         {
             ResourceToRecolt = Resource.Food;
+            // repeat until new order or lack of sheeps
             _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
         }
     }
