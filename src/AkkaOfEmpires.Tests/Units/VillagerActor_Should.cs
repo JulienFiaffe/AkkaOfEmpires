@@ -24,6 +24,21 @@ namespace AkkaOfEmpires.Tests.Units
             villager.UnderlyingActor.Profession.ShouldBe(Profession.Idle);
         }
 
+        [Fact(DisplayName = "VillagerActor Should Be Able To Change Profession")]
+        public void Be_Able_To_Change_Profession()
+        {
+            var villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
+            var shepherdCommand = new ShepherdFlock();
+            villager.Tell(shepherdCommand);
+
+            var gatherCommand = new GatherFruits();
+
+            villager.Tell(gatherCommand);
+
+            villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
+        }
+
+
         [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When GatherFruits Received")]
         public void Send_FoodGathered_When_GatherFood_Received()
         {
@@ -48,18 +63,5 @@ namespace AkkaOfEmpires.Tests.Units
             message.ResourceType.ShouldBe(Resource.Food);
         }
 
-        [Fact(DisplayName = "VillagerActor Should Be Able To Change Profession")]
-        public void Be_Able_To_Change_Profession()
-        {
-            var villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
-            var shepherdCommand = new ShepherdFlock();
-            villager.Tell(shepherdCommand);
-
-            var gatherCommand = new GatherFruits();
-
-            villager.Tell(gatherCommand);
-
-            villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
-        }
     }
 }
