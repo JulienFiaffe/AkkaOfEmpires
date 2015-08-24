@@ -7,7 +7,7 @@ using AkkaOfEmpires.Units;
 using Shouldly;
 using Xunit;
 
-namespace AkkaOfEmpires.Tests.Unit.Units
+namespace AkkaOfEmpires.Tests.Units
 {
     public class VillagerActor_Should : TestKit
     {
@@ -17,55 +17,33 @@ namespace AkkaOfEmpires.Tests.Unit.Units
             base.Dispose(disposing);
         }
 
-        [Fact]
+        [Fact(DisplayName = "VillagerActor Should Be Idle By Default")]
         public void Be_Idle_By_Default()
         {
             var villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
             villager.UnderlyingActor.Profession.ShouldBe(Profession.Idle);
         }
 
-        [Fact]
+        [Fact(DisplayName = "VillagerActor Should Send FoodGathered When GatherFruits Received")]
         public void Send_FoodGathered_When_GatherFood_Received()
         {
             var villager = ActorOf(Props.Create<VillagerActor>(TestActor));
-            var command = new GatherFood();
+            var command = new GatherFruits();
             
             villager.Tell(command);
             
             ExpectMsg<FoodGathered>();
         }
 
-        [Fact]
-        public void Send_WoodGathered_When_GatherWood_Received()
+        [Fact(DisplayName = "VillagerActor Should Send FoodGathered When ShepherdFlock Received")]
+        public void Send_FoodGathered_When_ShepherdFlock_Received()
         {
             var villager = ActorOf(Props.Create<VillagerActor>(TestActor));
-            var command = new GatherWood();
+            var command = new ShepherdFlock();
 
             villager.Tell(command);
 
-            ExpectMsg<WoodGathered>();
-        }
-
-        [Fact]
-        public void Send_GoldGathered_When_GatherGold_Received()
-        {
-            var villager = ActorOf(Props.Create<VillagerActor>(TestActor));
-            var command = new GatherGold();
-
-            villager.Tell(command);
-
-            ExpectMsg<GoldGathered>();
-        }
-
-        [Fact]
-        public void Send_StoneGathered_When_GatherStone_Received()
-        {
-            var villager = ActorOf(Props.Create<VillagerActor>(TestActor));
-            var command = new GatherStone();
-
-            villager.Tell(command);
-
-            ExpectMsg<StoneGathered>();
+            ExpectMsg<FoodGathered>();
         }
     }
 }

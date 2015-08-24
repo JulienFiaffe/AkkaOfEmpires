@@ -2,9 +2,9 @@
 {
     public enum Profession
     {
-        Idle = 0,
+        Idle,
         Gatherer,
-        Shepard,
+        Shepherd,
         Hunter,
         Farmer,
         Fisherman,
@@ -13,5 +13,14 @@
         StoneMiner,
         Builder,
         Repairer
+    }
+
+    public enum Resource
+    {
+        None,
+        Food,
+        Wood,
+        Stone,
+        Gold
     }
 }

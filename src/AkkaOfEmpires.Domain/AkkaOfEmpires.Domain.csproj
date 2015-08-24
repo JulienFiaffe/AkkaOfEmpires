@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Gathering.cs" />
+    <Compile Include="Commands\RecoltingResource.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Messages\Gathering.cs" />
+    <Compile Include="Messages\ResourcesRecolted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

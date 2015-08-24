@@ -4,7 +4,7 @@ using AkkaOfEmpires.Supervisors;
 using Shouldly;
 using Xunit;
 
-namespace AkkaOfEmpires.Tests.Unit.Supervisors
+namespace AkkaOfEmpires.Tests.Supervisors
 {
     public class ResourcesSupervisorActor_Should : TestKit
     {
@@ -14,7 +14,7 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisors
             base.Dispose(disposing);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ResourcesSupervisorActor Should Increase FoodAmount When FoodGathered Message Received")]
         public void Increase_FoodAmount_When_FoodGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
@@ -23,7 +23,7 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisors
             actor.UnderlyingActor.FoodAmount.ShouldBe<uint>(10);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ResourcesSupervisorActor Should Increase WoodAmount When WoodGathered Message Received")]
         public void Increase_WoodAmound_When_WoodGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
@@ -32,7 +32,7 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisors
             actor.UnderlyingActor.WoodAmount.ShouldBe<uint>(12);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ResourcesSupervisorActor Should Increase GoldAmount When GoldGathered Message Received")]
         public void Increase_GoldAmound_When_GoldGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
@@ -41,7 +41,7 @@ namespace AkkaOfEmpires.Tests.Unit.Supervisors
             actor.UnderlyingActor.GoldAmount.ShouldBe<uint>(8);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ResourcesSupervisorActor Should Increase StoneAmount When StoneGathered Message Received")]
         public void Increase_StoneAmound_When_StoneGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();

@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace AkkaOfEmpires.Tests.Scenario.Villager
+namespace AkkaOfEmpires.Tests.Scenarios.Villager
 {
     using TechTalk.SpecFlow;
     
@@ -74,18 +74,36 @@ namespace AkkaOfEmpires.Tests.Scenario.Villager
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Villager Professions")]
-        [Xunit.TraitAttribute("Description", "A villager gathers food when being a gatherer")]
-        public virtual void AVillagerGathersFoodWhenBeingAGatherer()
+        [Xunit.TraitAttribute("Description", "A villager recolts food when ordered to gather fruits")]
+        public virtual void AVillagerRecoltsFoodWhenOrderedToGatherFruits()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A villager gathers food when being a gatherer", ((string[])(null)));
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A villager recolts food when ordered to gather fruits", ((string[])(null)));
+#line 3
 this.ScenarioSetup(scenarioInfo);
-#line 5
+#line 4
  testRunner.Given("I have a villager", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 6
+#line 5
  testRunner.When("he becomes a gatherer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 7
- testRunner.Then("food amount increases over time", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 6
+ testRunner.Then("he recolts food", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Villager Professions")]
+        [Xunit.TraitAttribute("Description", "A villager recolts food when ordered to becoma a shepherd")]
+        public virtual void AVillagerRecoltsFoodWhenOrderedToBecomaAShepherd()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A villager recolts food when ordered to becoma a shepherd", ((string[])(null)));
+#line 8
+this.ScenarioSetup(scenarioInfo);
+#line 9
+ testRunner.Given("I have a villager", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 10
+ testRunner.When("he becomes a shepherd", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 11
+ testRunner.Then("he recolts food", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

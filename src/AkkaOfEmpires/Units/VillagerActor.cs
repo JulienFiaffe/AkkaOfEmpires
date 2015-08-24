@@ -5,7 +5,9 @@ using AkkaOfEmpires.Domain.Messages;
 
 namespace AkkaOfEmpires.Units
 {
-    public class VillagerActor : ReceiveActor
+    public class VillagerActor : TypedActor,
+        IHandle<GatherFruits>,
+        IHandle<ShepherdFlock>
     {
         private readonly IActorRef _resourcesSupervisor;
 
@@ -16,39 +18,18 @@ namespace AkkaOfEmpires.Units
         }
 
         public Profession Profession { get; private set; }
+        public Resource ResourceToRecolt { get; private set; }
 
-        protected override void PreStart()
+        public void Handle(GatherFruits message)
         {
-            base.PreStart();
-            Become(Gatherer);
+            ResourceToRecolt = Resource.Food;
+            _resourcesSupervisor.Tell(new FoodGathered { Quantity = 10 });
         }
 
-        private void Gatherer()
+        public void Handle(ShepherdFlock message)
         {
-            Receive<GatherFood>(m => OnGatherFood());
-            Receive<GatherWood>(m => OnGatherWood());
-            Receive<GatherGold>(m => OnGatherGold());
-            Receive<GatherStone>(m => OnGatherStone());
-        }
-
-        private void OnGatherFood()
-        {
-            _resourcesSupervisor.Tell(new FoodGathered{ Quantity = 10 });
-        }
-
-        private void OnGatherWood()
-        {
-            _resourcesSupervisor.Tell(new WoodGathered{ Quantity = 10 });
-        }
-
-        private void OnGatherGold()
-        {
-            _resourcesSupervisor.Tell(new GoldGathered { Quantity = 10 });
-        }
-
-        private void OnGatherStone()
-        {
-            _resourcesSupervisor.Tell(new StoneGathered { Quantity = 10 });
+            ResourceToRecolt = Resource.Food;
+            _resourcesSupervisor.Tell(new FoodGathered { Quantity = 10 });
         }
     }
 }
