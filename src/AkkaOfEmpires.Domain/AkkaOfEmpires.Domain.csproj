@@ -39,10 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Messages\Gathering\FoodGathered.cs" />
-    <Compile Include="Messages\Gathering\GoldGathered.cs" />
-    <Compile Include="Messages\Gathering\StoneGathered.cs" />
-    <Compile Include="Messages\Gathering\WoodGathered.cs" />
+    <Compile Include="Commands\RecoltingResource.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Messages\ResourceRecolted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
