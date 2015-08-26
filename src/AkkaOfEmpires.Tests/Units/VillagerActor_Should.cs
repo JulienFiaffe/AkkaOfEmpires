@@ -1,8 +1,10 @@
 ﻿using Akka.Actor;
+using Akka.TestKit;
 using Akka.TestKit.Xunit;
 using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Domain.Messages;
+using AkkaOfEmpires.Tests.Helpers;
 using AkkaOfEmpires.Units;
 using Shouldly;
 using Xunit;
@@ -17,35 +19,32 @@ namespace AkkaOfEmpires.Tests.Units
             base.Dispose(disposing);
         }
 
+        private readonly TestActorRef<VillagerActor> _villager;
+
+        public VillagerActor_Should()
+        {
+            _villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
+        }
+
         [Fact(DisplayName = "VillagerActor Should Be Idle By Default")]
         public void Be_Idle_By_Default()
         {
-            var villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
-            villager.UnderlyingActor.Profession.ShouldBe(Profession.Idle);
+            _villager.UnderlyingActor.Profession.ShouldBe(Profession.Idle);
         }
 
         [Fact(DisplayName = "VillagerActor Should Be Able To Change Profession")]
         public void Be_Able_To_Change_Profession()
         {
-            var villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
-            var shepherdCommand = new ShepherdFlock();
-            villager.Tell(shepherdCommand);
-
-            var gatherCommand = new GatherFruits();
-
-            villager.Tell(gatherCommand);
-
-            villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
+            _villager.Tell(TestData.ShepherdCommand);
+            _villager.Tell(TestData.GathererCommand);
+            _villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
         }
 
 
         [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When GatherFruits Received")]
         public void Send_FoodGathered_When_GatherFood_Received()
         {
-            var villager = ActorOf(Props.Create<VillagerActor>(TestActor));
-            var command = new GatherFruits();
-            
-            villager.Tell(command);
+            _villager.Tell(TestData.GathererCommand);
 
             var message = ExpectMsg<ResourceRecolted>();
             message.ResourceType.ShouldBe(Resource.Food);
@@ -54,10 +53,7 @@ namespace AkkaOfEmpires.Tests.Units
         [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When ShepherdFlock Received")]
         public void Send_FoodGathered_When_ShepherdFlock_Received()
         {
-            var villager = ActorOf(Props.Create<VillagerActor>(TestActor));
-            var command = new ShepherdFlock();
-
-            villager.Tell(command);
+            _villager.Tell(TestData.ShepherdCommand);
 
             var message = ExpectMsg<ResourceRecolted>();
             message.ResourceType.ShouldBe(Resource.Food);
