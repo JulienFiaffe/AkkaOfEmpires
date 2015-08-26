@@ -73,7 +73,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Helpers\TestData.cs" />
+    <Compile Include="Helpers\VillagerOrders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenarios\Villager\Professions.feature.cs">
       <AutoGen>True</AutoGen>

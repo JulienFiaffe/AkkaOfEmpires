@@ -35,8 +35,8 @@ namespace AkkaOfEmpires.Tests.Units
         [Fact(DisplayName = "VillagerActor Should Be Able To Change Profession")]
         public void Be_Able_To_Change_Profession()
         {
-            _villager.Tell(TestData.ShepherdCommand);
-            _villager.Tell(TestData.GathererCommand);
+            _villager.Tell(VillagerOrders.ShepherdFlock);
+            _villager.Tell(VillagerOrders.GatherFruits);
             _villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
         }
 
@@ -44,7 +44,7 @@ namespace AkkaOfEmpires.Tests.Units
         [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When GatherFruits Received")]
         public void Send_FoodGathered_When_GatherFood_Received()
         {
-            _villager.Tell(TestData.GathererCommand);
+            _villager.Tell(VillagerOrders.GatherFruits);
 
             var message = ExpectMsg<ResourceRecolted>();
             message.ResourceType.ShouldBe(Resource.Food);
@@ -53,11 +53,37 @@ namespace AkkaOfEmpires.Tests.Units
         [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When ShepherdFlock Received")]
         public void Send_FoodGathered_When_ShepherdFlock_Received()
         {
-            _villager.Tell(TestData.ShepherdCommand);
+            _villager.Tell(VillagerOrders.ShepherdFlock);
 
             var message = ExpectMsg<ResourceRecolted>();
             message.ResourceType.ShouldBe(Resource.Food);
         }
 
+        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When HuntPrey Received")]
+        public void Send_FoodGathered_When_HuntPrey_Received()
+        {
+            _villager.Tell(VillagerOrders.HuntPrey);
+
+            var message = ExpectMsg<ResourceRecolted>();
+            message.ResourceType.ShouldBe(Resource.Food);
+        }
+
+        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When FarmCrops Received")]
+        public void Send_FoodGathered_When_FarmCrops_Received()
+        {
+            _villager.Tell(VillagerOrders.FarmCrops);
+
+            var message = ExpectMsg<ResourceRecolted>();
+            message.ResourceType.ShouldBe(Resource.Food);
+        }
+
+        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When CatchFish Received")]
+        public void Send_FoodGathered_When_CatchFish_Received()
+        {
+            _villager.Tell(VillagerOrders.CatchFish);
+
+            var message = ExpectMsg<ResourceRecolted>();
+            message.ResourceType.ShouldBe(Resource.Food);
+        }
     }
 }

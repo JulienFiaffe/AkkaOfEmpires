@@ -49,10 +49,43 @@ namespace AkkaOfEmpires.Units
             CommandsHandler();
         }
 
+        private void Hunter()
+        {
+            Profession = Profession.Hunter;
+            ResourceToRecolt = Resource.Food;
+
+            _resourcesSupervisor.Tell(new ResourceRecolted{ResourceType = ResourceToRecolt, Quantity = 10});
+
+            CommandsHandler();
+        }
+
+        private void Farmer()
+        {
+            Profession = Profession.Farmer;
+            ResourceToRecolt = Resource.Food;
+
+            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
+
+            CommandsHandler();
+        }
+
+        private void Fisherman()
+        {
+            Profession = Profession.Fisherman;
+            ResourceToRecolt = Resource.Food;
+
+            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
+
+            CommandsHandler();
+        }
+
         private void CommandsHandler()
         {
             Receive<GatherFruits>(m => Become(Gatherer));
             Receive<ShepherdFlock>(m => Become(Shepherd));
+            Receive<HuntPrey>(m => Become(Hunter));
+            Receive<FarmCrops>(m => Become(Farmer));
+            Receive<CatchFish>(m => Become(Fisherman));
         }
     }
 }
