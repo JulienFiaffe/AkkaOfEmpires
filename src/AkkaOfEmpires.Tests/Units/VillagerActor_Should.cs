@@ -93,5 +93,23 @@ namespace AkkaOfEmpires.Tests.Units
             var message = ExpectMsg<ResourceRecolted>();
             message.ResourceType.ShouldBe(Resource.Wood);
         }
+
+        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Wood When MineStone Received")]
+        public void Send_FoodGathered_When_MineStone_Received()
+        {
+            _villager.Tell(VillagerOrders.MineStone);
+
+            var message = ExpectMsg<ResourceRecolted>();
+            message.ResourceType.ShouldBe(Resource.Stone);
+        }
+
+        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Wood When MineGold Received")]
+        public void Send_FoodGathered_When_MineGold_Received()
+        {
+            _villager.Tell(VillagerOrders.MineGold);
+
+            var message = ExpectMsg<ResourceRecolted>();
+            message.ResourceType.ShouldBe(Resource.Gold);
+        }
     }
 }

@@ -29,3 +29,13 @@ Scenario: A villager recolts wood when ordered to cut trees
 	Given I have a villager
 	When he becomes a lumberjack
 	Then he recolts wood
+
+Scenario: A villager recolts stone when ordered to mine stone
+	Given I have a villager
+	When he becomes a stone miner
+	Then he recolts stone
+
+Scenario: A villager recolts wood when ordered to mine gold
+	Given I have a villager
+	When he becomes a gold miner
+	Then he recolts gold

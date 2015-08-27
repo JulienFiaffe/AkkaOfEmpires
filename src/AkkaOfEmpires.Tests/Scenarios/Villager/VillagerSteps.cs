@@ -71,6 +71,18 @@ namespace AkkaOfEmpires.Tests.Scenarios.Villager
             _villagerActor.Tell(VillagerOrders.CutTrees);
         }
 
+        [When(@"he becomes a stone miner")]
+        public void WhenHeBecomesAStoneMiner()
+        {
+            _villagerActor.Tell(VillagerOrders.MineStone);
+        }
+
+        [When(@"he becomes a gold miner")]
+        public void WhenHeBecomesAGoldMiner()
+        {
+            _villagerActor.Tell(VillagerOrders.MineGold);
+        }
+
 
         [Then(@"he recolts food")]
         public void ThenHeWillRecoltFood()
@@ -82,6 +94,18 @@ namespace AkkaOfEmpires.Tests.Scenarios.Villager
         public void ThenHeRecoltsWood()
         {
             _villagerActor.UnderlyingActor.ResourceToRecolt.ShouldBe(Resource.Wood);
+        }
+
+        [Then(@"he recolts stone")]
+        public void ThenHeRecoltsStone()
+        {
+            _villagerActor.UnderlyingActor.ResourceToRecolt.ShouldBe(Resource.Stone);
+        }
+
+        [Then(@"he recolts gold")]
+        public void ThenHeRecoltsGold()
+        {
+            _villagerActor.UnderlyingActor.ResourceToRecolt.ShouldBe(Resource.Gold);
         }
     }
 }

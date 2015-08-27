@@ -11,4 +11,8 @@
     public class CatchFish {}
 
     public class CutTrees {}
+
+    public class MineStone {}
+
+    public class MineGold {}
 }

@@ -87,6 +87,22 @@ namespace AkkaOfEmpires.Units
             _resourcesSupervisor.Tell(new ResourceRecolted {ResourceType = ResourceToRecolt, Quantity = 10});
         }
 
+        private void StoneMiner()
+        {
+            Profession = Profession.StoneMiner;
+            ResourceToRecolt = Resource.Stone;
+
+            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
+        }
+
+        private void GoldMiner()
+        {
+            Profession = Profession.GoldMiner;
+            ResourceToRecolt = Resource.Gold;
+
+            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
+        }
+
         private void CommandsHandler()
         {
             Receive<GatherFruits>(m => Become(Gatherer));
@@ -95,6 +111,8 @@ namespace AkkaOfEmpires.Units
             Receive<FarmCrops>(m => Become(Farmer));
             Receive<CatchFish>(m => Become(Fisherman));
             Receive<CutTrees>(m => Become(Lumberjack));
+            Receive<MineStone>(m => Become(StoneMiner));
+            Receive<MineGold>(m => Become(GoldMiner));
         }
     }
 }
