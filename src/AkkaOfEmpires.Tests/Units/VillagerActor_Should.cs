@@ -2,7 +2,6 @@
 using Akka.TestKit;
 using Akka.TestKit.Xunit;
 using AkkaOfEmpires.Domain;
-using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Domain.Messages;
 using AkkaOfEmpires.Tests.Helpers;
 using AkkaOfEmpires.Units;
@@ -84,6 +83,15 @@ namespace AkkaOfEmpires.Tests.Units
 
             var message = ExpectMsg<ResourceRecolted>();
             message.ResourceType.ShouldBe(Resource.Food);
+        }
+
+        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Wood When CutTrees Received")]
+        public void Send_FoodGathered_When_CutTrees_Received()
+        {
+            _villager.Tell(VillagerOrders.CutTrees);
+
+            var message = ExpectMsg<ResourceRecolted>();
+            message.ResourceType.ShouldBe(Resource.Wood);
         }
     }
 }

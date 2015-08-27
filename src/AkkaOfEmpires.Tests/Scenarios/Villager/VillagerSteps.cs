@@ -2,7 +2,6 @@
 using Akka.TestKit;
 using Akka.TestKit.Xunit;
 using AkkaOfEmpires.Domain;
-using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Supervisors;
 using AkkaOfEmpires.Tests.Helpers;
 using AkkaOfEmpires.Units;
@@ -66,10 +65,23 @@ namespace AkkaOfEmpires.Tests.Scenarios.Villager
             _villagerActor.Tell(VillagerOrders.CatchFish);
         }
 
+        [When(@"he becomes a lumberjack")]
+        public void WhenHeBecomesALumberjack()
+        {
+            _villagerActor.Tell(VillagerOrders.CutTrees);
+        }
+
+
         [Then(@"he recolts food")]
         public void ThenHeWillRecoltFood()
         {
             _villagerActor.UnderlyingActor.ResourceToRecolt.ShouldBe(Resource.Food);
+        }
+
+        [Then(@"he recolts wood")]
+        public void ThenHeRecoltsWood()
+        {
+            _villagerActor.UnderlyingActor.ResourceToRecolt.ShouldBe(Resource.Wood);
         }
     }
 }

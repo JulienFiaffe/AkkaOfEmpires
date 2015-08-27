@@ -79,6 +79,14 @@ namespace AkkaOfEmpires.Units
             CommandsHandler();
         }
 
+        private void Lumberjack()
+        {
+            Profession = Profession.Lumberjack;
+            ResourceToRecolt = Resource.Wood;
+
+            _resourcesSupervisor.Tell(new ResourceRecolted {ResourceType = ResourceToRecolt, Quantity = 10});
+        }
+
         private void CommandsHandler()
         {
             Receive<GatherFruits>(m => Become(Gatherer));
@@ -86,6 +94,7 @@ namespace AkkaOfEmpires.Units
             Receive<HuntPrey>(m => Become(Hunter));
             Receive<FarmCrops>(m => Become(Farmer));
             Receive<CatchFish>(m => Become(Fisherman));
+            Receive<CutTrees>(m => Become(Lumberjack));
         }
     }
 }

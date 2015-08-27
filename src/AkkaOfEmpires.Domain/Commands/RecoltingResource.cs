@@ -9,4 +9,6 @@
     public class FarmCrops {}
 
     public class CatchFish {}
+
+    public class CutTrees {}
 }

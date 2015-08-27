@@ -9,5 +9,6 @@ namespace AkkaOfEmpires.Tests.Helpers
         public static readonly HuntPrey HuntPrey = new HuntPrey();
         public static readonly FarmCrops FarmCrops = new FarmCrops();
         public static readonly CatchFish CatchFish = new CatchFish();
+        public static readonly CutTrees CutTrees = new CutTrees();
     }
 }
