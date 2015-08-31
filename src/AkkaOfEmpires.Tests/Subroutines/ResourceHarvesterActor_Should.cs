@@ -68,7 +68,7 @@ namespace AkkaOfEmpires.Tests.Subroutines
         }
 
         [Fact(DisplayName = "ResourceHarvesterActor Should Empty CurrentlyCarrying If Different Resource To Harvest")]
-        public void test()
+        public void Empty_CurrentlyCarrying_If_Different_Resource_To_Harvest()
         {
             _harvester.Tell(VillagerOrders.CutTrees);
             _harvester.Tell(new ResourceHarvesterActor.ResourceHarvested());
