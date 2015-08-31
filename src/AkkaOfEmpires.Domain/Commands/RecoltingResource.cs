@@ -1,18 +1,68 @@
-﻿namespace AkkaOfEmpires.Domain.Commands
+﻿using System;
+
+namespace AkkaOfEmpires.Domain.Commands
 {
-    public class GatherFruits {}
+    public class GatherFruits : HarvestFood
+    {
+        public override Profession AssociatedProfession
+        {
+            get { return Profession.Gatherer; }
+        }
+    }
 
-    public class ShepherdFlock {}
+    public class ShepherdFlock : HarvestFood
+    {
+        public override Profession AssociatedProfession
+        {
+            get { return Profession.Shepherd; }
+        }
+    }
 
-    public class HuntPrey {}
+    public class HuntPrey : HarvestFood
+    {
+        public override Profession AssociatedProfession
+        {
+            get { return Profession.Hunter; }
+        }
+    }
 
-    public class FarmCrops {}
+    public class FarmCrops : HarvestFood
+    {
+        public override Profession AssociatedProfession
+        {
+            get { return Profession.Farmer; }
+        }
+    }
 
-    public class CatchFish {}
+    public class CatchFish : HarvestFood
+    {
+        public override Profession AssociatedProfession
+        {
+            get { return Profession.Fisherman; }
+        }
+    }
 
-    public class CutTrees {}
+    public class CutTrees : HarvestWood
+    {
+        public override Profession AssociatedProfession
+        {
+            get { return Profession.Lumberjack; }
+        }
+    }
 
-    public class MineStone {}
+    public class MineStone : HarvestStone
+    {
+        public override Profession AssociatedProfession
+        {
+            get { return Profession.StoneMiner; }
+        }
+    }
 
-    public class MineGold {}
+    public class MineGold : HarvestGold
+    {
+        public override Profession AssociatedProfession
+        {
+            get { return Profession.GoldMiner; }
+        }
+    }
 }

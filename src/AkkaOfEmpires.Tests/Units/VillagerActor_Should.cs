@@ -35,6 +35,7 @@ namespace AkkaOfEmpires.Tests.Units
         public void Be_Able_To_Change_Profession()
         {
             _villager.Tell(VillagerOrders.ShepherdFlock);
+            _villager.UnderlyingActor.Profession.ShouldBe(Profession.Shepherd);
             _villager.Tell(VillagerOrders.GatherFruits);
             _villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
         }
