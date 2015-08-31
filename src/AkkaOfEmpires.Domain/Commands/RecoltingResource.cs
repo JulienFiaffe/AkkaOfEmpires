@@ -54,7 +54,7 @@ namespace AkkaOfEmpires.Domain.Commands
     {
         public override Profession AssociatedProfession
         {
-            get { return Profession.StoneMiner; }
+            get { return Profession.Miner; }
         }
     }
 
@@ -62,7 +62,7 @@ namespace AkkaOfEmpires.Domain.Commands
     {
         public override Profession AssociatedProfession
         {
-            get { return Profession.GoldMiner; }
+            get { return Profession.Miner; }
         }
     }
 }

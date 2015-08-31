@@ -5,7 +5,7 @@ using AkkaOfEmpires.Domain.Messages;
 
 namespace AkkaOfEmpires.Supervisors
 {
-    public class ResourcesSupervisorActor : TypedActor, IHandle<ResourceRecolted>
+    public class ResourcesSupervisorActor : TypedActor, IHandle<ResourceGathered>
     {
         public Dictionary<Resource, uint> ResourcesAmounts { get; private set; }
 
@@ -20,7 +20,7 @@ namespace AkkaOfEmpires.Supervisors
             };
         }
 
-        public void Handle(ResourceRecolted message)
+        public void Handle(ResourceGathered message)
         {
             ResourcesAmounts[message.ResourceType] += message.Quantity;
         }

@@ -42,7 +42,7 @@
     <Compile Include="Commands\IHarvestResourceCommand.cs" />
     <Compile Include="Commands\RecoltingResource.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Messages\ResourceRecolted.cs" />
+    <Compile Include="Messages\ResourceGathered.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,7 +1,7 @@
 ﻿using Akka.Actor;
 using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Commands;
-using AkkaOfEmpires.Domain.Messages;
+using AkkaOfEmpires.Subroutines;
 
 namespace AkkaOfEmpires.Units
 {
@@ -13,10 +13,15 @@ namespace AkkaOfEmpires.Units
         {
             _resourcesSupervisor = resourcesSupervisor;
             Profession = Profession.Idle;
+
+            var props = Props.Create<ResourceHarvesterActor>(Context.System.Scheduler, _resourcesSupervisor);
+            _resourceHarvesterRoutine = Context.ActorOf(props);
         }
 
         public Profession Profession { get; private set; }
         public Resource ResourceToRecolt { get; private set; }
+
+        private readonly IActorRef _resourceHarvesterRoutine;
 
         protected override void PreStart()
         {
@@ -29,86 +34,12 @@ namespace AkkaOfEmpires.Units
             ListenForCommands();
         }
 
-        //private void Gatherer()
-        //{
-        //    Profession = Profession.Gatherer;
-        //    ResourceToRecolt = Resource.Food;
-        //    // repeat until new order or lack of bushes
-        //    _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-
-        //    CommandsHandler();
-        //}
-
-        //private void Shepherd()
-        //{
-        //    Profession = Profession.Shepherd;
-        //    ResourceToRecolt = Resource.Food;
-        //    // repeat until new order or lack of sheeps
-        //    _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-
-        //    CommandsHandler();
-        //}
-
-        //private void Hunter()
-        //{
-        //    Profession = Profession.Hunter;
-        //    ResourceToRecolt = Resource.Food;
-
-        //    _resourcesSupervisor.Tell(new ResourceRecolted{ResourceType = ResourceToRecolt, Quantity = 10});
-
-        //    CommandsHandler();
-        //}
-
-        //private void Farmer()
-        //{
-        //    Profession = Profession.Farmer;
-        //    ResourceToRecolt = Resource.Food;
-
-        //    _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-
-        //    CommandsHandler();
-        //}
-
-        //private void Fisherman()
-        //{
-        //    Profession = Profession.Fisherman;
-        //    ResourceToRecolt = Resource.Food;
-
-        //    _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-
-        //    CommandsHandler();
-        //}
-
-        //private void Lumberjack()
-        //{
-        //    Profession = Profession.Lumberjack;
-        //    ResourceToRecolt = Resource.Wood;
-
-        //    _resourcesSupervisor.Tell(new ResourceRecolted {ResourceType = ResourceToRecolt, Quantity = 10});
-        //}
-
-        //private void StoneMiner()
-        //{
-        //    Profession = Profession.StoneMiner;
-        //    ResourceToRecolt = Resource.Stone;
-
-        //    _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-        //}
-
-        //private void GoldMiner()
-        //{
-        //    Profession = Profession.GoldMiner;
-        //    ResourceToRecolt = Resource.Gold;
-
-        //    _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-        //}
-
         private void ResourceHarvester(IHarvestResourceCommand command)
         {
             Profession = command.AssociatedProfession;
             ResourceToRecolt = command.ResourceToRecolt;
 
-            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
+            _resourceHarvesterRoutine.Tell(command);
 
             ListenForCommands();
         }
@@ -116,15 +47,7 @@ namespace AkkaOfEmpires.Units
         private void ListenForCommands()
         {
             Receive<IHarvestResourceCommand>(m => Become(() => ResourceHarvester(m)));
-
-            //Receive<GatherFruits>(m => Become(Gatherer));
-            //Receive<ShepherdFlock>(m => Become(Shepherd));
-            //Receive<HuntPrey>(m => Become(Hunter));
-            //Receive<FarmCrops>(m => Become(Farmer));
-            //Receive<CatchFish>(m => Become(Fisherman));
-            //Receive<CutTrees>(m => Become(Lumberjack));
-            //Receive<MineStone>(m => Become(StoneMiner));
-            //Receive<MineGold>(m => Become(GoldMiner));
+            // cancel subroutine if something else to do
         }
     }
 }
