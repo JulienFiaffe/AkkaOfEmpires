@@ -2,7 +2,13 @@
 {
     public class ResourceGathered
     {
-        public Resource ResourceType { get; set; }
-        public uint Quantity { get; set; }
+        public ResourceGathered(Resource resourceType, uint quantity)
+        {
+            ResourceType = resourceType;
+            Quantity = quantity;
+        }
+
+        public Resource ResourceType { get; private set; }
+        public uint Quantity { get; private set; }
     }
 }

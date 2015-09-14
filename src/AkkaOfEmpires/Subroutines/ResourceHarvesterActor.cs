@@ -39,7 +39,7 @@ namespace AkkaOfEmpires.Subroutines
         {
             CurrentlyCarrying++;
             if (CurrentlyCarrying == MAX_CAPACITY)
-                _resourcesSupervisor.Tell(new ResourceGathered { Quantity = CurrentlyCarrying, ResourceType = ResourceToHarvest });
+                _resourcesSupervisor.Tell(new ResourceGathered(ResourceToHarvest, CurrentlyCarrying));
             else
                 _messageScheduler.ScheduleTellOnce(TimeSpan.FromSeconds(1), Self, new ResourceHarvested(), Self);
         }
