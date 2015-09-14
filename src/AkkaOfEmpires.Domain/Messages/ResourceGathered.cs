@@ -11,4 +11,14 @@
         public Resource ResourceType { get; private set; }
         public uint Quantity { get; private set; }
     }
+
+    public class MaxCapacityReached
+    {
+        public MaxCapacityReached(uint quantity)
+        {
+            Quantity = quantity;
+        }
+
+        public uint Quantity { get; private set; }
+    }
 }

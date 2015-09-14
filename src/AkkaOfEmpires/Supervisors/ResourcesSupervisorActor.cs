@@ -20,7 +20,7 @@ namespace AkkaOfEmpires.Supervisors
             };
         }
 
-        public void Handle(ResourceGathered message)
+        public virtual void Handle(ResourceGathered message)
         {
             ResourcesAmounts[message.ResourceType] += message.Quantity;
         }

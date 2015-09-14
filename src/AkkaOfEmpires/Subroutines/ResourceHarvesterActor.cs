@@ -11,17 +11,17 @@ namespace AkkaOfEmpires.Subroutines
         IHandle<ResourceHarvesterActor.ResourceHarvested>
     {
         private readonly ITellScheduler _messageScheduler;
-        private readonly IActorRef _resourcesSupervisor;
+        private readonly IActorRef _villagerActor;
 
         public const uint MAX_CAPACITY = 10;
         public uint CurrentlyCarrying { get; private set; }
 
         public Resource ResourceToHarvest { get; private set; }
 
-        public ResourceHarvesterActor(ITellScheduler messageScheduler, IActorRef resourcesSupervisor)
+        public ResourceHarvesterActor(ITellScheduler messageScheduler, IActorRef villagerAcor)
         {
             _messageScheduler = messageScheduler;
-            _resourcesSupervisor = resourcesSupervisor;
+            _villagerActor = villagerAcor;
             CurrentlyCarrying = 0;
         }
 
@@ -39,7 +39,10 @@ namespace AkkaOfEmpires.Subroutines
         {
             CurrentlyCarrying++;
             if (CurrentlyCarrying == MAX_CAPACITY)
-                _resourcesSupervisor.Tell(new ResourceGathered(ResourceToHarvest, CurrentlyCarrying));
+            {
+                _villagerActor.Tell(new MaxCapacityReached(CurrentlyCarrying));
+                Context.Stop(Self);
+            }
             else
                 _messageScheduler.ScheduleTellOnce(TimeSpan.FromSeconds(1), Self, new ResourceHarvested(), Self);
         }

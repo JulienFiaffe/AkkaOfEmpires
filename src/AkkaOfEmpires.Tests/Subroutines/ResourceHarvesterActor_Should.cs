@@ -58,13 +58,13 @@ namespace AkkaOfEmpires.Tests.Subroutines
             _mockScheduler.Verify(m => m.ScheduleTellOnce(It.IsAny<TimeSpan>(), _harvester, It.IsAny<ResourceHarvesterActor.ResourceHarvested>(), _harvester));
         }
 
-        [Fact(DisplayName = "ResourceHarvesterActor Should Send ResourceGathered When MaxCapacity Reached")]
-        public void Send_ResourceGathered_When_MaxCapacity_Reached()
+        [Fact(DisplayName = "ResourceHarvesterActor Should Send MaxCapacityReached When MaxCapacity Reached")]
+        public void Send_MaxCapacityReached_When_MaxCapacity_Reached()
         {
             for (int i = 0; i < 10; i++)
                 _harvester.Tell(new ResourceHarvesterActor.ResourceHarvested());
 
-            ExpectMsg<ResourceGathered>();
+            ExpectMsg<MaxCapacityReached>();
         }
 
         [Fact(DisplayName = "ResourceHarvesterActor Should Empty CurrentlyCarrying If Different Resource To Harvest")]

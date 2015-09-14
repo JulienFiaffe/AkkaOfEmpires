@@ -1,6 +1,7 @@
 ﻿using Akka.Actor;
 using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Commands;
+using AkkaOfEmpires.Domain.Messages;
 using AkkaOfEmpires.Subroutines;
 
 namespace AkkaOfEmpires.Units
@@ -13,15 +14,12 @@ namespace AkkaOfEmpires.Units
         {
             _resourcesSupervisor = resourcesSupervisor;
             Profession = Profession.Idle;
-
-            var props = Props.Create<ResourceHarvesterActor>(Context.System.Scheduler, _resourcesSupervisor);
-            _resourceHarvesterRoutine = Context.ActorOf(props);
         }
 
         public Profession Profession { get; private set; }
         public Resource ResourceToRecolt { get; private set; }
 
-        private readonly IActorRef _resourceHarvesterRoutine;
+        private IHarvestResourceCommand _currentCommand;
 
         protected override void PreStart()
         {
@@ -36,18 +34,28 @@ namespace AkkaOfEmpires.Units
 
         private void ResourceHarvester(IHarvestResourceCommand command)
         {
+            _currentCommand = command;
             Profession = command.AssociatedProfession;
             ResourceToRecolt = command.ResourceToRecolt;
 
-            _resourceHarvesterRoutine.Tell(command);
+            var props = Props.Create<ResourceHarvesterActor>(Context.System.Scheduler, Self);
+            var resourceHarvesterRoutine = Context.ActorOf(props);
+            resourceHarvesterRoutine.Tell(command);
 
+            ListenForCommands();
+        }
+
+        private void ResourceCarrier(MaxCapacityReached message)
+        {
+            _resourcesSupervisor.Tell(new ResourceGathered(ResourceToRecolt, message.Quantity));
+            Self.Tell(_currentCommand);     //continue harvesting
             ListenForCommands();
         }
 
         private void ListenForCommands()
         {
             Receive<IHarvestResourceCommand>(m => Become(() => ResourceHarvester(m)));
-            // cancel subroutine if something else to do
+            Receive<MaxCapacityReached>(m => Become(() => ResourceCarrier(m)));
         }
     }
 }

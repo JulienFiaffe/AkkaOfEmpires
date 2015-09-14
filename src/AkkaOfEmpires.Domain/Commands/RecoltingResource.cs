@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AkkaOfEmpires.Domain.Commands
+﻿namespace AkkaOfEmpires.Domain.Commands
 {
     public class GatherFruits : HarvestFood
     {

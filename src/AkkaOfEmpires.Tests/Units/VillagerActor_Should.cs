@@ -39,5 +39,13 @@ namespace AkkaOfEmpires.Tests.Units
             _villager.Tell(VillagerOrders.GatherFruits);
             _villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
         }
+
+        [Fact(DisplayName = "VillagerActor Should Send ResourceGathered When MaxCapacityReached Received")]
+        public void Send_ResourceGathered_When_MaxCapacityReached_Received()
+        {
+            _villager.Tell(new MaxCapacityReached(10));
+            var message = ExpectMsg<ResourceGathered>();
+            message.Quantity.ShouldBe<uint>(10);
+        }
     }
 }
