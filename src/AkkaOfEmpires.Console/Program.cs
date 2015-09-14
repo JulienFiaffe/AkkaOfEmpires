@@ -14,9 +14,14 @@ namespace AkkaOfEmpires.ConsoleUI
             var supervisor = system.ActorOf(supervisorProps);
 
             var villagerProps = Props.Create<ConsoleVillagerActor>(supervisor);
-            var villager = system.ActorOf(villagerProps);
+            var gathered = system.ActorOf(villagerProps);
+            gathered.Tell(new GatherFruits());
 
-            villager.Tell(new GatherFruits());
+            var shepherd = system.ActorOf(villagerProps);
+            shepherd.Tell(new ShepherdFlock());
+
+            var lumberjack = system.ActorOf(villagerProps);
+            lumberjack.Tell(new CutTrees());
 
             system.AwaitTermination();
         }
