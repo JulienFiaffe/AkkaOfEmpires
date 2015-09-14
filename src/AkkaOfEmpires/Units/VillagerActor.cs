@@ -32,7 +32,7 @@ namespace AkkaOfEmpires.Units
             ListenForCommands();
         }
 
-        private void ResourceHarvester(IHarvestResourceCommand command)
+        protected virtual void ResourceHarvester(IHarvestResourceCommand command)
         {
             _currentCommand = command;
             Profession = command.AssociatedProfession;
@@ -45,17 +45,17 @@ namespace AkkaOfEmpires.Units
             ListenForCommands();
         }
 
-        private void ResourceCarrier(MaxCapacityReached message)
+        protected virtual void ResourceCarrier(uint quantity)
         {
-            _resourcesSupervisor.Tell(new ResourceGathered(ResourceToRecolt, message.Quantity));
-            Self.Tell(_currentCommand);     //continue harvesting
+            _resourcesSupervisor.Tell(new ResourceGathered(ResourceToRecolt, quantity));
+            Self.Tell(_currentCommand);
             ListenForCommands();
         }
 
         private void ListenForCommands()
         {
             Receive<IHarvestResourceCommand>(m => Become(() => ResourceHarvester(m)));
-            Receive<MaxCapacityReached>(m => Become(() => ResourceCarrier(m)));
+            Receive<MaxCapacityReached>(m => Become(() => ResourceCarrier(m.Quantity)));
         }
     }
 }

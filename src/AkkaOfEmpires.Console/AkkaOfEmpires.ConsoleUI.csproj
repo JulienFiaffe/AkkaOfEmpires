@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleActors\ConsoleResourceHarvesterActor.cs" />
+    <Compile Include="ConsoleActors\ConsoleVillagerActor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConsoleActors\ConsoleResourcesSupervisorActor.cs" />

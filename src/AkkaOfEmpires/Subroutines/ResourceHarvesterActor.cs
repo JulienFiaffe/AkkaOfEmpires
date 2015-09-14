@@ -35,7 +35,7 @@ namespace AkkaOfEmpires.Subroutines
             _messageScheduler.ScheduleTellOnce(TimeSpan.FromSeconds(1), Self, new ResourceHarvested(), Self);
         }
 
-        public void Handle(ResourceHarvested message)
+        public virtual void Handle(ResourceHarvested message)
         {
             CurrentlyCarrying++;
             if (CurrentlyCarrying == MAX_CAPACITY)
