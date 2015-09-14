@@ -19,7 +19,7 @@ namespace AkkaOfEmpires.Tests.Supervisors
         public void Increase_FoodAmount_When_FoodGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
-            var message = new ResourceRecolted { ResourceType = Resource.Food, Quantity = 10 };
+            var message = new ResourceGathered(Resource.Food, 10);
             actor.Tell(message);
             actor.UnderlyingActor.ResourcesAmounts[Resource.Food].ShouldBe<uint>(10);
         }
@@ -28,7 +28,7 @@ namespace AkkaOfEmpires.Tests.Supervisors
         public void Increase_WoodAmound_When_WoodGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
-            var message = new ResourceRecolted { ResourceType = Resource.Wood, Quantity = 12 };
+            var message = new ResourceGathered(Resource.Wood, 12);
             actor.Tell(message);
             actor.UnderlyingActor.ResourcesAmounts[Resource.Wood].ShouldBe<uint>(12);
         }
@@ -37,7 +37,7 @@ namespace AkkaOfEmpires.Tests.Supervisors
         public void Increase_GoldAmound_When_GoldGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
-            var message = new ResourceRecolted { ResourceType = Resource.Gold, Quantity = 8 };
+            var message = new ResourceGathered(Resource.Gold, 8);
             actor.Tell(message);
             actor.UnderlyingActor.ResourcesAmounts[Resource.Gold].ShouldBe<uint>(8);
         }
@@ -46,7 +46,7 @@ namespace AkkaOfEmpires.Tests.Supervisors
         public void Increase_StoneAmound_When_StoneGathered_Message_Received()
         {
             var actor = ActorOfAsTestActorRef<ResourcesSupervisorActor>();
-            var message = new ResourceRecolted { ResourceType = Resource.Stone, Quantity = 5 };
+            var message = new ResourceGathered(Resource.Stone, 5);
             actor.Tell(message);
             actor.UnderlyingActor.ResourcesAmounts[Resource.Stone].ShouldBe<uint>(5);
         }

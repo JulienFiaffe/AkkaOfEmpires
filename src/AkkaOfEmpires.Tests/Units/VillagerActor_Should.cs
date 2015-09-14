@@ -35,81 +35,17 @@ namespace AkkaOfEmpires.Tests.Units
         public void Be_Able_To_Change_Profession()
         {
             _villager.Tell(VillagerOrders.ShepherdFlock);
+            _villager.UnderlyingActor.Profession.ShouldBe(Profession.Shepherd);
             _villager.Tell(VillagerOrders.GatherFruits);
             _villager.UnderlyingActor.Profession.ShouldBe(Profession.Gatherer);
         }
 
-
-        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When GatherFruits Received")]
-        public void Send_FoodGathered_When_GatherFood_Received()
+        [Fact(DisplayName = "VillagerActor Should Send ResourceGathered When MaxCapacityReached Received")]
+        public void Send_ResourceGathered_When_MaxCapacityReached_Received()
         {
-            _villager.Tell(VillagerOrders.GatherFruits);
-
-            var message = ExpectMsg<ResourceRecolted>();
-            message.ResourceType.ShouldBe(Resource.Food);
-        }
-
-        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When ShepherdFlock Received")]
-        public void Send_FoodGathered_When_ShepherdFlock_Received()
-        {
-            _villager.Tell(VillagerOrders.ShepherdFlock);
-
-            var message = ExpectMsg<ResourceRecolted>();
-            message.ResourceType.ShouldBe(Resource.Food);
-        }
-
-        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When HuntPrey Received")]
-        public void Send_FoodGathered_When_HuntPrey_Received()
-        {
-            _villager.Tell(VillagerOrders.HuntPrey);
-
-            var message = ExpectMsg<ResourceRecolted>();
-            message.ResourceType.ShouldBe(Resource.Food);
-        }
-
-        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When FarmCrops Received")]
-        public void Send_FoodGathered_When_FarmCrops_Received()
-        {
-            _villager.Tell(VillagerOrders.FarmCrops);
-
-            var message = ExpectMsg<ResourceRecolted>();
-            message.ResourceType.ShouldBe(Resource.Food);
-        }
-
-        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Food When CatchFish Received")]
-        public void Send_FoodGathered_When_CatchFish_Received()
-        {
-            _villager.Tell(VillagerOrders.CatchFish);
-
-            var message = ExpectMsg<ResourceRecolted>();
-            message.ResourceType.ShouldBe(Resource.Food);
-        }
-
-        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Wood When CutTrees Received")]
-        public void Send_FoodGathered_When_CutTrees_Received()
-        {
-            _villager.Tell(VillagerOrders.CutTrees);
-
-            var message = ExpectMsg<ResourceRecolted>();
-            message.ResourceType.ShouldBe(Resource.Wood);
-        }
-
-        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Wood When MineStone Received")]
-        public void Send_FoodGathered_When_MineStone_Received()
-        {
-            _villager.Tell(VillagerOrders.MineStone);
-
-            var message = ExpectMsg<ResourceRecolted>();
-            message.ResourceType.ShouldBe(Resource.Stone);
-        }
-
-        [Fact(DisplayName = "VillagerActor Should Send ResourceRecolted With Wood When MineGold Received")]
-        public void Send_FoodGathered_When_MineGold_Received()
-        {
-            _villager.Tell(VillagerOrders.MineGold);
-
-            var message = ExpectMsg<ResourceRecolted>();
-            message.ResourceType.ShouldBe(Resource.Gold);
+            _villager.Tell(new MaxCapacityReached(10));
+            var message = ExpectMsg<ResourceGathered>();
+            message.Quantity.ShouldBe<uint>(10);
         }
     }
 }

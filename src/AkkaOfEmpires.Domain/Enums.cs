@@ -9,8 +9,7 @@
         Farmer,
         Fisherman,
         Lumberjack,
-        GoldMiner,
-        StoneMiner,
+        Miner,
         Builder,
         Repairer
     }

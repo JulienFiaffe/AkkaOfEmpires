@@ -2,6 +2,7 @@
 using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Domain.Messages;
+using AkkaOfEmpires.Subroutines;
 
 namespace AkkaOfEmpires.Units
 {
@@ -18,6 +19,8 @@ namespace AkkaOfEmpires.Units
         public Profession Profession { get; private set; }
         public Resource ResourceToRecolt { get; private set; }
 
+        private IHarvestResourceCommand _currentCommand;
+
         protected override void PreStart()
         {
             base.PreStart();
@@ -26,93 +29,33 @@ namespace AkkaOfEmpires.Units
 
         private void Idle()
         {
-            CommandsHandler();
+            ListenForCommands();
         }
 
-        private void Gatherer()
+        protected virtual void ResourceHarvester(IHarvestResourceCommand command)
         {
-            Profession = Profession.Gatherer;
-            ResourceToRecolt = Resource.Food;
-            // repeat until new order or lack of bushes
-            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
+            _currentCommand = command;
+            Profession = command.AssociatedProfession;
+            ResourceToRecolt = command.ResourceToRecolt;
 
-            CommandsHandler();
+            var props = Props.Create<ResourceHarvesterActor>(Context.System.Scheduler, Self);
+            var resourceHarvesterRoutine = Context.ActorOf(props);
+            resourceHarvesterRoutine.Tell(command);
+
+            ListenForCommands();
         }
 
-        private void Shepherd()
+        protected virtual void ResourceCarrier(uint quantity)
         {
-            Profession = Profession.Shepherd;
-            ResourceToRecolt = Resource.Food;
-            // repeat until new order or lack of sheeps
-            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-
-            CommandsHandler();
+            _resourcesSupervisor.Tell(new ResourceGathered(ResourceToRecolt, quantity));
+            Self.Tell(_currentCommand);
+            ListenForCommands();
         }
 
-        private void Hunter()
+        private void ListenForCommands()
         {
-            Profession = Profession.Hunter;
-            ResourceToRecolt = Resource.Food;
-
-            _resourcesSupervisor.Tell(new ResourceRecolted{ResourceType = ResourceToRecolt, Quantity = 10});
-
-            CommandsHandler();
-        }
-
-        private void Farmer()
-        {
-            Profession = Profession.Farmer;
-            ResourceToRecolt = Resource.Food;
-
-            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-
-            CommandsHandler();
-        }
-
-        private void Fisherman()
-        {
-            Profession = Profession.Fisherman;
-            ResourceToRecolt = Resource.Food;
-
-            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-
-            CommandsHandler();
-        }
-
-        private void Lumberjack()
-        {
-            Profession = Profession.Lumberjack;
-            ResourceToRecolt = Resource.Wood;
-
-            _resourcesSupervisor.Tell(new ResourceRecolted {ResourceType = ResourceToRecolt, Quantity = 10});
-        }
-
-        private void StoneMiner()
-        {
-            Profession = Profession.StoneMiner;
-            ResourceToRecolt = Resource.Stone;
-
-            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-        }
-
-        private void GoldMiner()
-        {
-            Profession = Profession.GoldMiner;
-            ResourceToRecolt = Resource.Gold;
-
-            _resourcesSupervisor.Tell(new ResourceRecolted { ResourceType = ResourceToRecolt, Quantity = 10 });
-        }
-
-        private void CommandsHandler()
-        {
-            Receive<GatherFruits>(m => Become(Gatherer));
-            Receive<ShepherdFlock>(m => Become(Shepherd));
-            Receive<HuntPrey>(m => Become(Hunter));
-            Receive<FarmCrops>(m => Become(Farmer));
-            Receive<CatchFish>(m => Become(Fisherman));
-            Receive<CutTrees>(m => Become(Lumberjack));
-            Receive<MineStone>(m => Become(StoneMiner));
-            Receive<MineGold>(m => Become(GoldMiner));
+            Receive<IHarvestResourceCommand>(m => Become(() => ResourceHarvester(m)));
+            Receive<MaxCapacityReached>(m => Become(() => ResourceCarrier(m.Quantity)));
         }
     }
 }
