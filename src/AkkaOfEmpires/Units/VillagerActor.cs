@@ -9,10 +9,12 @@ namespace AkkaOfEmpires.Units
     public class VillagerActor : ReceiveActor
     {
         private readonly IActorRef _resourcesSupervisor;
+        private readonly SubroutinesFactory _subroutinesFactory;
 
-        public VillagerActor(IActorRef resourcesSupervisor)
+        public VillagerActor(IActorRef resourcesSupervisor, SubroutinesFactory subroutinesFactory)
         {
             _resourcesSupervisor = resourcesSupervisor;
+            _subroutinesFactory = subroutinesFactory;
             Profession = Profession.Idle;
         }
 
@@ -38,8 +40,9 @@ namespace AkkaOfEmpires.Units
             Profession = command.AssociatedProfession;
             ResourceToRecolt = command.ResourceToRecolt;
 
-            var props = Props.Create<ResourceHarvesterActor>(Context.System.Scheduler, Self);
-            var resourceHarvesterRoutine = Context.ActorOf(props);
+            //var props = Props.Create<ResourceHarvesterActor>(Context.System.Scheduler, Self);
+            var resourceHarvesterRoutine = _subroutinesFactory.CreateResourceHarvesterActor(Context, Self);
+                //Context.ActorOf(props);
             resourceHarvesterRoutine.Tell(command);
 
             ListenForCommands();

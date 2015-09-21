@@ -3,6 +3,7 @@ using Akka.TestKit;
 using Akka.TestKit.Xunit;
 using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Messages;
+using AkkaOfEmpires.Subroutines;
 using AkkaOfEmpires.Tests.Helpers;
 using AkkaOfEmpires.Units;
 using Shouldly;
@@ -19,10 +20,11 @@ namespace AkkaOfEmpires.Tests.Units
         }
 
         private readonly TestActorRef<VillagerActor> _villager;
+        private readonly SubroutinesFactory _subroutinesFactory = new SubroutinesFactory();
 
         public VillagerActor_Should()
         {
-            _villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor));
+            _villager = ActorOfAsTestActorRef<VillagerActor>(Props.Create<VillagerActor>(TestActor, _subroutinesFactory));
         }
 
         [Fact(DisplayName = "VillagerActor Should Be Idle By Default")]

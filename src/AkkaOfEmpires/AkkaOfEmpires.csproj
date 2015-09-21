@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AkkaOfEmpiresSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subroutines\SubroutinesFactory.cs" />
     <Compile Include="Supervisors\ResourcesSupervisorActor.cs" />
     <Compile Include="Subroutines\ResourceHarvesterActor.cs" />
     <Compile Include="Units\VillagerActor.cs" />
