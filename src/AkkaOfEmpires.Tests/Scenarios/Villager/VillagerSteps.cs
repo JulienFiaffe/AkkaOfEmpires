@@ -2,6 +2,7 @@
 using Akka.TestKit;
 using Akka.TestKit.Xunit;
 using AkkaOfEmpires.Domain;
+using AkkaOfEmpires.Subroutines;
 using AkkaOfEmpires.Supervisors;
 using AkkaOfEmpires.Tests.Helpers;
 using AkkaOfEmpires.Units;
@@ -27,11 +28,12 @@ namespace AkkaOfEmpires.Tests.Scenarios.Villager
 
         private TestActorRef<VillagerActor> _villagerActor;
         private TestActorRef<ResourcesSupervisorActor> _resourcesSupervisor;
+        private readonly SubroutinesFactory _subroutinesFactory = new SubroutinesFactory();
 
         [Given(@"I have a villager")]
         public void GivenIHaveAVillager()
         {
-            var props = Props.Create<VillagerActor>(_resourcesSupervisor);
+            var props = Props.Create<VillagerActor>(_resourcesSupervisor, _subroutinesFactory);
             _villagerActor = ActorOfAsTestActorRef<VillagerActor>(props);
         }
 

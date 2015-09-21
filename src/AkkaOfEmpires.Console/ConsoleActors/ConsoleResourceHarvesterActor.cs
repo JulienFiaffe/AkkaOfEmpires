@@ -13,8 +13,8 @@ namespace AkkaOfEmpires.ConsoleUI.ConsoleActors
 
         public override void Handle(ResourceHarvested message)
         {
-            Console.WriteLine("1 {0} harvested!", ResourceToHarvest);
             base.Handle(message);
+            Console.WriteLine("1 unit of {0} harvested. (carrying {1}).", ResourceToHarvest, CurrentlyCarrying);
         }
     }
 }
