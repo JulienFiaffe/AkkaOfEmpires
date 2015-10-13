@@ -8,7 +8,7 @@ namespace AkkaOfEmpires.ConsoleUI.ConsoleActors
 {
     public class ConsoleVillagerActor : VillagerActor
     {
-        public ConsoleVillagerActor(IActorRef resourcesSupervisor, SubroutinesFactory subroutinesFactory)
+        public ConsoleVillagerActor(IActorRef resourcesSupervisor, ISubroutinesFactory subroutinesFactory)
             : base(resourcesSupervisor, subroutinesFactory)
         {
         }

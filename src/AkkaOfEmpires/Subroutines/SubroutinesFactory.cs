@@ -2,9 +2,14 @@
 
 namespace AkkaOfEmpires.Subroutines
 {
-    public class SubroutinesFactory
+    public interface ISubroutinesFactory
     {
-        public virtual IActorRef CreateResourceHarvesterActor(IActorContext actorContext, IActorRef villagerActor)
+        IActorRef CreateResourceHarvesterActor(IActorContext actorContext, IActorRef villagerActor);
+    }
+
+    public class SubroutinesFactory : ISubroutinesFactory
+    {
+        public IActorRef CreateResourceHarvesterActor(IActorContext actorContext, IActorRef villagerActor)
         {
             var props = Props.Create<ResourceHarvesterActor>(actorContext.System.Scheduler, villagerActor);
             var resourceHarvesterRoutine = actorContext.ActorOf(props);

@@ -9,9 +9,9 @@ namespace AkkaOfEmpires.Units
     public class VillagerActor : ReceiveActor
     {
         private readonly IActorRef _resourcesSupervisor;
-        private readonly SubroutinesFactory _subroutinesFactory;
+        private readonly ISubroutinesFactory _subroutinesFactory;
 
-        public VillagerActor(IActorRef resourcesSupervisor, SubroutinesFactory subroutinesFactory)
+        public VillagerActor(IActorRef resourcesSupervisor, ISubroutinesFactory subroutinesFactory)
         {
             _resourcesSupervisor = resourcesSupervisor;
             _subroutinesFactory = subroutinesFactory;

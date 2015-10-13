@@ -44,7 +44,7 @@ namespace AkkaOfEmpires.Subroutines
                 Context.Stop(Self);
             }
             else
-                _messageScheduler.ScheduleTellOnce(TimeSpan.FromSeconds(1), Self, new ResourceHarvested(), Self);
+                _messageScheduler.ScheduleTellOnce(TimeSpan.FromMilliseconds(200), Self, new ResourceHarvested(), Self);
         }
 
         public class ResourceHarvested { }
