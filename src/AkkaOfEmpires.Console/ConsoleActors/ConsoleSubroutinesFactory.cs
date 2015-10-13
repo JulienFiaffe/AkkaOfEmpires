@@ -3,9 +3,9 @@ using Akka.Actor;
 
 namespace AkkaOfEmpires.ConsoleUI.ConsoleActors
 {
-    public class ConsoleSubroutinesFactory : SubroutinesFactory
+    public class ConsoleSubroutinesFactory : ISubroutinesFactory
     {
-        public override IActorRef CreateResourceHarvesterActor(IActorContext actorContext, IActorRef villagerActor)
+        public IActorRef CreateResourceHarvesterActor(IActorContext actorContext, IActorRef villagerActor)
         {
             var props = Props.Create<ConsoleResourceHarvesterActor>(actorContext.System.Scheduler, villagerActor);
             var consoleActor = actorContext.ActorOf(props);

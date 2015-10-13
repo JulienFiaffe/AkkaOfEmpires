@@ -3,17 +3,18 @@ using AkkaOfEmpires.Domain;
 using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Domain.Messages;
 using AkkaOfEmpires.Subroutines;
+using AkkaOfEmpires.Supervisors;
 
 namespace AkkaOfEmpires.Units
 {
     public class VillagerActor : ReceiveActor
     {
         private readonly IActorRef _resourcesSupervisor;
-        private readonly SubroutinesFactory _subroutinesFactory;
+        private readonly ISubroutinesFactory _subroutinesFactory;
 
-        public VillagerActor(IActorRef resourcesSupervisor, SubroutinesFactory subroutinesFactory)
+        public VillagerActor(ISupervisorsFactory supervisorsFactory, ISubroutinesFactory subroutinesFactory)
         {
-            _resourcesSupervisor = resourcesSupervisor;
+            _resourcesSupervisor = supervisorsFactory.GetResourcesSupervisor();
             _subroutinesFactory = subroutinesFactory;
             Profession = Profession.Idle;
         }
@@ -40,9 +41,7 @@ namespace AkkaOfEmpires.Units
             Profession = command.AssociatedProfession;
             ResourceToRecolt = command.ResourceToRecolt;
 
-            //var props = Props.Create<ResourceHarvesterActor>(Context.System.Scheduler, Self);
             var resourceHarvesterRoutine = _subroutinesFactory.CreateResourceHarvesterActor(Context, Self);
-                //Context.ActorOf(props);
             resourceHarvesterRoutine.Tell(command);
 
             ListenForCommands();

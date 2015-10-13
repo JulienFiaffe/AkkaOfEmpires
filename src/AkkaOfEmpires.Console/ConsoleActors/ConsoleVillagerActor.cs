@@ -3,13 +3,14 @@ using AkkaOfEmpires.Units;
 using System;
 using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Subroutines;
+using AkkaOfEmpires.Supervisors;
 
 namespace AkkaOfEmpires.ConsoleUI.ConsoleActors
 {
     public class ConsoleVillagerActor : VillagerActor
     {
-        public ConsoleVillagerActor(IActorRef resourcesSupervisor, SubroutinesFactory subroutinesFactory)
-            : base(resourcesSupervisor, subroutinesFactory)
+        public ConsoleVillagerActor(ISupervisorsFactory supervisorsFactory, ISubroutinesFactory subroutinesFactory)
+            : base(supervisorsFactory, subroutinesFactory)
         {
         }
 
