@@ -4,6 +4,7 @@ using Akka.DI.StructureMap;
 using AkkaOfEmpires.ConsoleUI.ConsoleActors;
 using AkkaOfEmpires.Domain.Commands;
 using AkkaOfEmpires.Subroutines;
+using AkkaOfEmpires.Supervisors;
 using StructureMap;
 
 namespace AkkaOfEmpires.ConsoleUI
@@ -17,8 +18,8 @@ namespace AkkaOfEmpires.ConsoleUI
             var resolver = new StructureMapDependencyResolver(container, system);
 
             var villagerProps = system.DI().Props<ConsoleVillagerActor>();
-            var gathered = system.ActorOf(villagerProps);
-            gathered.Tell(new GatherFruits());
+            var gatherer = system.ActorOf(villagerProps);
+            gatherer.Tell(new GatherFruits());
 
             var shepherd = system.ActorOf(villagerProps);
             shepherd.Tell(new ShepherdFlock());
@@ -29,12 +30,15 @@ namespace AkkaOfEmpires.ConsoleUI
             system.AwaitTermination();
         }
 
-        static IContainer GetDependencyContainer(ActorSystem system)
+        static IContainer GetDependencyContainer(ActorSystem actorSystem)
         {
             var container = new Container(c =>
             {
                 c.For<ISubroutinesFactory>().Use<ConsoleSubroutinesFactory>();
-                c.ForSingletonOf<IActorRef>().Add(system.ActorOf<ConsoleResourcesSupervisorActor>());
+                c.ForSingletonOf<ISupervisorsFactory>()
+                    .Use<ConsoleSupervisorsFactory>()
+                    .Ctor<ActorSystem>()
+                    .Is(actorSystem);
             });
             return container;
         }

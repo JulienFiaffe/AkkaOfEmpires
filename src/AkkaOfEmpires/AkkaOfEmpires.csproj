@@ -68,6 +68,7 @@
     <Compile Include="Subroutines\SubroutinesFactory.cs" />
     <Compile Include="Supervisors\ResourcesSupervisorActor.cs" />
     <Compile Include="Subroutines\ResourceHarvesterActor.cs" />
+    <Compile Include="Supervisors\SupervisorsFactory.cs" />
     <Compile Include="Units\VillagerActor.cs" />
   </ItemGroup>
   <ItemGroup>

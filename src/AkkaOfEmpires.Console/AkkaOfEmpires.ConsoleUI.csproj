@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="ConsoleActors\ConsoleResourceHarvesterActor.cs" />
     <Compile Include="ConsoleActors\ConsoleSubroutinesFactory.cs" />
+    <Compile Include="ConsoleActors\ConsoleSupervisorsFactory.cs" />
     <Compile Include="ConsoleActors\ConsoleVillagerActor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
